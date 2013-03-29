@@ -5,6 +5,7 @@ import urllib2
 import json
 import sys
 import pprint
+import time
 
 entries_json_url = 'https://api.feedbin.me/v1/entries.json'
 states_json_url = 'https://api.feedbin.me/v1/entry_states.json'
@@ -12,7 +13,7 @@ states_json_url = 'https://api.feedbin.me/v1/entry_states.json'
 if len(sys.argv) != 2:
     sys.exit('Needs path to starred.json file as argument.')
 
-# load starred.json
+print "load starred.json"
 fp = open(sys.argv[1])
 starred = json.load(fp)
 starred_urls = []
@@ -54,3 +55,17 @@ starentries = []
 for fb_entry in fb_entries:
     if fb_entry['url'] in starred_urls:
         starentries.append(fb_entry['id'])
+
+# star things!
+star_request = {'entry_states': []}
+for star in starentries:
+    star_request['entry_states'].append({'entry_id': star, 'starred': True, 'starred_updated_at': time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())})
+
+print "sending request"
+pprint.pprint(star_request)
+req = urllib2.Request(states_json_url, json.dumps(star_request,fp), {'Content-Type': 'application/json'})
+fp = urllib2.urlopen(req)
+response = fp.read()
+
+print "response"
+pprint.pprint(json.loads(response))

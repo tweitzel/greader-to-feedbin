@@ -3,8 +3,13 @@ greader-to-feedbin
 
 stars your google reader entries (exported from google takeout) in feedbin.me
 
+This is very ugly and a stopgap; please fork and fix it up if it pleases you!
+
+Caveat: can't star things that were starred before feedbin existed. Sadface.
+
 example usage:
-```python greader-to-feedbin.py myaddress\@gmail.com-takeout/Reader/starred.json
+```
+python greader-to-feedbin.py myaddress\@gmail.com-takeout/Reader/starred.json
 load starred.json
 Feedbin email address: feedbin@example.com
 Password:
@@ -111,4 +116,5 @@ response
                  u'read_updated_at': u'2013-03-28T04:24:48.527188Z',
                  u'starred': True,
                  u'starred_updated_at': u'2013-03-29T22:16:20.000000Z',
-                 u'updated_at': u'2013-03-29T22:16:20.000000Z'}]}```
+                 u'updated_at': u'2013-03-29T22:16:20.000000Z'}]}
+```
